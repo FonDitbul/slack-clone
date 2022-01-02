@@ -8,14 +8,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserDto } from '../common/dto/user.dto';
+import { User } from '../common/decorators/user.decorator';
 
 @ApiTags('USER')
 @Controller('api/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get()
-  getUsers(@Req() req) {
-    return req.user;
+  getUsers(@User() user) {
+    return user;
   }
 
   @ApiResponse({
@@ -34,7 +35,9 @@ export class UsersController {
   })
   @ApiOperation({ summary: '로그인' })
   @Post('login')
-  logIn() {}
+  logIn(@User() user) {
+    return user;
+  }
 
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout')
