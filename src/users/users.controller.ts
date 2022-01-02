@@ -1,14 +1,20 @@
-import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { joinRequestDto } from './dto/join.request.dto';
+import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
   @Get()
   getUsers(@Req() req) {
     return req.user;
   }
 
   @Post()
-  postUsers() {}
+  postUsers(@Body() data: joinRequestDto) {
+    this.usersService.postUsers(data);
+    return;
+  }
 
   @Post('login')
   logIn() {}
