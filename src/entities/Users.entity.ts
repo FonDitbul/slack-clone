@@ -18,8 +18,8 @@ import { MentionsEntity } from './Mentions.entity';
 import { WorkspaceMembersEntity } from './WorkspaceMembers.entity';
 import { WorkspacesEntity } from './Workspaces.entity';
 
-@Index('email', ['email'], { unique: true })
-@Entity({ schema: 'sleact', name: 'users' })
+// @Index('email', ['email'], { unique: true })
+@Entity({ name: 'users' })
 export class UsersEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;

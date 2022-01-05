@@ -11,10 +11,10 @@ import {
 import { WorkspacesEntity } from './Workspaces.entity';
 import { UsersEntity } from './Users.entity';
 
-@Index('WorkspaceId', ['WorkspaceId'], {})
-@Index('SenderId', ['SenderId'], {})
-@Index('ReceiverId', ['ReceiverId'], {})
-@Entity({ schema: 'sleact', name: 'mentions' })
+// @Index('WorkspaceId', ['WorkspaceId'], {})
+// @Index('SenderId', ['SenderId'], {})
+// @Index('ReceiverId', ['ReceiverId'], {})
+@Entity({ name: 'mentions' })
 export class MentionsEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -31,7 +31,7 @@ export class MentionsEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column('int', { name: 'WorkspaceId', nullable: true })
+  @Column('int', { name: 'Workspa1ceId2', nullable: true })
   WorkspaceId: number | null;
 
   @Column('int', { name: 'SenderId', nullable: true })

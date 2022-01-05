@@ -10,8 +10,8 @@ import {
 import { WorkspacesEntity } from './Workspaces.entity';
 import { UsersEntity } from './Users.entity';
 
-@Index('UserId', ['UserId'], {})
-@Entity('workspacemembers', { schema: 'sleact' })
+// @Index('UserId', ['UserId'], {})
+@Entity('workspacemembers', {})
 export class WorkspaceMembersEntity {
   @CreateDateColumn()
   createdAt: Date;
@@ -25,8 +25,8 @@ export class WorkspaceMembersEntity {
   @Column('int', { primary: true, name: 'UserId' })
   UserId: number;
 
-  @Column('datetime', { name: 'loggedInAt', nullable: true })
-  loggedInAt: Date | null;
+  // @Column('datetime', { name: 'loggedInAt', nullable: true })
+  // loggedInAt: Date | null;
 
   @ManyToOne(
     () => WorkspacesEntity,

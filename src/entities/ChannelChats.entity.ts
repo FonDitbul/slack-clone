@@ -11,9 +11,9 @@ import {
 import { UsersEntity } from './Users.entity';
 import { ChannelsEntity } from './Channels.entity';
 
-@Index('UserId', ['UserId'], {})
-@Index('ChannelId', ['ChannelId'], {})
-@Entity({ schema: 'sleact', name: 'channelchats' })
+// @Index('UserId', ['UserId'], {})
+// @Index('ChannelId', ['ChannelId'], {})
+@Entity({ name: 'channelchats' })
 export class ChannelChatsEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;

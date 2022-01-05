@@ -17,10 +17,10 @@ import { MentionsEntity } from './Mentions.entity';
 import { WorkspaceMembersEntity } from './WorkspaceMembers.entity';
 import { UsersEntity } from './Users.entity';
 
-@Index('name', ['name'], { unique: true })
-@Index('url', ['url'], { unique: true })
-@Index('OwnerId', ['OwnerId'], {})
-@Entity({ schema: 'sleact', name: 'workspaces' })
+// @Index('name', ['name'], { unique: true })
+// @Index('url', ['url'], { unique: true })
+// @Index('OwnerId', ['OwnerId'], {})
+@Entity({ name: 'workspaces' })
 export class WorkspacesEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
