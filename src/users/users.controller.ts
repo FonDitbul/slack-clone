@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { joinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
 import {
@@ -9,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { UserDto } from '../common/dto/user.dto';
 import { User } from '../common/decorators/user.decorator';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
 
 @ApiTags('USER')
 @Controller('api/users')
@@ -37,6 +46,7 @@ export class UsersController {
     type: UserDto,
   })
   @ApiOperation({ summary: '로그인' })
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   logIn(@User() user) {
     return user;
