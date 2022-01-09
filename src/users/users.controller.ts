@@ -18,20 +18,27 @@ import {
 import { UserDto } from '../common/dto/user.dto';
 import { User } from '../common/decorators/user.decorator';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { LoggedInGuard } from '../auth/logged-in.guard';
+import { NotLoggedInGuard } from '../auth/not-logged-in.guard';
 
 @ApiTags('USER')
 @Controller('api/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+  @ApiResponse({
+    type: UserDto,
+  })
+  @ApiOperation({ summary: '내 정보 조회' })
   @Get()
   getUsers(@User() user) {
-    return user;
+    return user || false;
   }
 
   @ApiResponse({
     type: UserDto,
   })
-  @ApiOperation({ summary: '내 정보 조회' })
+  @ApiOperation({ summary: '회원가입' })
+  @UseGuards(new NotLoggedInGuard())
   @Post()
   async join(@Body() data: joinRequestDto) {
     return await this.usersService.join(
@@ -52,6 +59,7 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout')
   logOut(@Req() req, @Res() res) {
