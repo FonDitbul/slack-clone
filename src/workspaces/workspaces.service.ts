@@ -57,6 +57,38 @@ export class WorkspacesService {
     await this.channelMembersRepository.save(channelMember);
   }
 
+  async createWorkspaceMembers(url, email) {
+    const workspace = await this.workspacesRepository.findOne({
+      where: { url },
+      // relations: ['Channels'],
+      join: {
+        alias: 'workspace',
+        innerJoinAndSelect: {
+          channels: 'workspace.Channels',
+        },
+      },
+    });
+    // 복잡하게 사용될 경우 쿼리 빌더를 더 선호하게 사용함
+    // this.workspacesRepository
+    //   .createQueryBuilder('workspace')
+    //   .innerJoinAndSelect('workspace.Channels', 'channels') //innerJoinAndSelect를 써야 안에 정보를 가져옴
+    //   .getOne();
+    const user = await this.usersRepository.findOne({ where: { email } });
+    if (!user) return null;
+
+    const workspaceMember = new WorkspaceMembersEntity();
+    workspaceMember.WorkspaceId = workspace.id;
+    workspaceMember.UserId = user.id;
+    await this.workspaceMembersRepository.save(workspaceMember);
+
+    const channelMember = new ChannelMembersEntity();
+    channelMember.ChannelId = workspace.Channels.find(
+      (v) => v.name === '일반',
+    ).id;
+    channelMember.UserId = user.id;
+    await this.channelMembersRepository.save(channelMember);
+  }
+
   async getWorkspaceMembers(url: string) {
     return await this.usersRepository
       .createQueryBuilder('user')
@@ -65,5 +97,20 @@ export class WorkspacesService {
         url,
       })
       .getMany();
+  }
+
+  async getWorkspaceMember(url: string, id: number) {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .innerJoinAndSelect(
+        'user.Workspaces',
+        'workspaces',
+        'workspaces.url = :url',
+        {
+          url,
+        },
+      )
+      .getOne();
   }
 }

@@ -46,5 +46,10 @@ export class WorkspacesController {
   kickMembersFromWorkspace() {}
 
   @Get(':url/members/:id')
-  getMembersInfoInWorkspace() {}
+  async getMembersInfoInWorkspace(
+    @Param('url') url: string,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return await this.workspacesService.getWorkspaceMember(url, +id);
+  }
 }
