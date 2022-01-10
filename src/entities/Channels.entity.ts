@@ -16,7 +16,7 @@ import { UsersEntity } from './Users.entity';
 import { WorkspacesEntity } from './Workspaces.entity';
 
 // @Index('WorkspaceId', ['WorkspaceId'], {})
-@Entity({})
+@Entity({ name: 'channel' })
 export class ChannelsEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -27,8 +27,8 @@ export class ChannelsEntity {
   @Column({
     name: 'private',
     nullable: true,
-    width: 1,
-    default: () => "'0'",
+    // width: 1,
+    // default: () => "'0'",
   })
   private: boolean | null;
 
