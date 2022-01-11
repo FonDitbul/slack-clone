@@ -10,6 +10,7 @@ import {
 import { joinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
 import {
+  ApiCookieAuth,
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
@@ -20,6 +21,7 @@ import { User } from '../common/decorators/user.decorator';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { LoggedInGuard } from '../auth/logged-in.guard';
 import { NotLoggedInGuard } from '../auth/not-logged-in.guard';
+import { UsersEntity } from '../entities/Users.entity';
 
 @ApiTags('USER')
 @Controller('api/users')
@@ -29,8 +31,9 @@ export class UsersController {
     type: UserDto,
   })
   @ApiOperation({ summary: '내 정보 조회' })
+  @ApiCookieAuth('connect.sid')
   @Get()
-  getUsers(@User() user) {
+  getUsers(@User() user: UsersEntity) {
     return user || false;
   }
 

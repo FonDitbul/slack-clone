@@ -12,9 +12,10 @@ import { ChannelsService } from './channels.service';
 import { User } from '../common/decorators/user.decorator';
 import { UsersEntity } from '../entities/Users.entity';
 import { CreateChannelDto } from './dto/create-channel.dto';
+import { PostChatDto } from './dto/post-chat.dto';
 
 @ApiTags('CHANNLE')
-@Controller('channels')
+@Controller('api/workspaces')
 export class ChannelsController {
   constructor(private readonly channelsService: ChannelsService) {}
 
@@ -77,6 +78,26 @@ export class ChannelsController {
       perPage,
       page,
     );
+  }
+
+  @Post(':name/chats')
+  postChat(
+    @Param('url') url: string,
+    @Param('name') name: string,
+    @Body() body: PostChatDto,
+    @User() user: UsersEntity,
+  ) {
+    return this.channelsService.postChat({
+      url,
+      content: body.content,
+      name,
+      myId: user.id,
+    });
+  }
+
+  @Post(':name/images')
+  postImages(@Body() body) {
+    // return this.channelsService;
   }
 
   @ApiOperation({ summary: '안 읽은 개수 가져오기' })

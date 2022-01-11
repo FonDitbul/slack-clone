@@ -26,7 +26,7 @@ export class LocalSerializer extends PassportSerializer {
         { select: ['id', 'email', 'nickname'], relations: ['Workspaces'] },
       )
       .then((user) => {
-        console.log('user', user);
+        // console.log('user', user);
         done(null, user);
       })
       .catch((error) => done(error));

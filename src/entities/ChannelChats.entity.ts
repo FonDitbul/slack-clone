@@ -10,6 +10,8 @@ import {
 } from 'typeorm';
 import { UsersEntity } from './Users.entity';
 import { ChannelsEntity } from './Channels.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 // @Index('UserId', ['UserId'], {})
 // @Index('ChannelId', ['ChannelId'], {})
@@ -18,6 +20,12 @@ export class ChannelChatsEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    description: '메시지 내용',
+    example: '안녕 반가워',
+  })
   @Column('text', { name: 'content' })
   content: string;
 
