@@ -32,7 +32,7 @@ export class ChannelsService {
       .innerJoinAndSelect(
         'channels.ChannelMembers',
         'channelMembers',
-        'channelMembers.userId = :myId',
+        'channelMembers.UserId = :myId',
         { myId },
       )
       .innerJoinAndSelect(
@@ -113,7 +113,7 @@ export class ChannelsService {
       .innerJoin('channelChats.Channel', 'channel', 'channel.name=:name', {
         name,
       })
-      .innerJoin('channel.Workpsace', 'workspace', 'workspace.url = :url', {
+      .innerJoin('channel.Workspace', 'workspace', 'workspace.url = :url', {
         url,
       })
       .innerJoinAndSelect('channelChats.user', 'user')
