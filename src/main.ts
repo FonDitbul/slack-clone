@@ -6,13 +6,23 @@ import { ValidationPipe } from '@nestjs/common';
 import * as passport from 'passport';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
+import * as path from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
+  app.useStaticAssets(path.join(__dirname, '..', 'uploads'), {
+    prefix: 'uploads',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Sleact API')
