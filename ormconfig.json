@@ -6,6 +6,8 @@
   "password": "postgres",
   "database": "slack-clone",
   "entities": ["dist/**/*.entity{.ts,.js}"],
+  "seeds": ["src/database/seeds/**/*.ts"],
   "synchronize": true,
-  "timezone": "Z"
+  "timezone": "Z",
+  "logging": true
 }
